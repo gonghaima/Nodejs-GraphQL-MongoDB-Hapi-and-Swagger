@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "hapi": "^17.5.2",
+    "nodemon": "^1.18.2"
+  }
+}
