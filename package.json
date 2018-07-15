@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "hapi": "^17.5.2",
+    "mongoose": "^5.2.3",
     "nodemon": "^1.18.2"
   }
 }

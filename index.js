@@ -1,4 +1,5 @@
 const hapi = require('hapi');
+const mongoose = require('mongoose')
 
 const server = hapi.server({
     port: 4000,
@@ -6,6 +7,11 @@ const server = hapi.server({
 });
 
 const init = async() => {
+
+    mongoose.connect('mongodb://whoisyourmum:8whoisyourmum@ds119171.mlab.com:19171/hapigraphql');
+    mongoose.connection.once('open', ()=>{
+        console.log('connected to database'); 
+    });
     server.route({
         method: 'GET',
         path: '/',
