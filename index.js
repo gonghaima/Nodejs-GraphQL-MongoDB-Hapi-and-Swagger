@@ -1,18 +1,52 @@
 const hapi = require('hapi');
 const mongoose = require('mongoose')
+const { graphqlHapi, graphiqlHapi } = require('apollo-server-hapi');
+const schema = require('./graphql/schema');
 
-const server = hapi.server({
+
+const server = new hapi.server({
     port: 4000,
     host: 'localhost'
 });
 
 
 const init = async () => {
+
+    // // Notice it’s graphiql not graphql.
+    // // Graphiql is the in-browser IDE for exploring GraphQL.
+    await server.register({
+        plugin: graphiqlHapi,
+        options: {
+            path: '/graphiql',
+            graphiqlOptions: {
+                endpointURL: '/graphql'
+            }
+        }
+    });
+
+    // //Register graphqlHapi which includes the schema
+
+    await server.register({
+        plugin: graphqlHapi,
+        options: {
+            path: '/graphql',
+            graphqlOptions: {
+                schema
+            },
+            route: {
+                cors: true
+            }
+        }
+    });
+
+
+
     mongoose.connect('mongodb://whoisyourmum:8whoisyourmum@ds119171.mlab.com:19171/hapigraphql');
     mongoose.connection.once('open', () => {
         console.log('connected to database');
     });
     const Painting = require('./models/Painting');
+
     server.route([{
         method: 'GET',
         path: '/',
@@ -46,3 +80,4 @@ const init = async () => {
 };
 
 init();
+
