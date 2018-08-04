@@ -3,6 +3,12 @@ const mongoose = require('mongoose')
 const { graphqlHapi, graphiqlHapi } = require('apollo-server-hapi');
 const schema = require('./graphql/schema');
 
+/* swagger section */
+const Inert = require('inert');
+const Vision = require('vision');
+const HapiSwagger = require('hapi-swagger');
+const Pack = require('./package');
+
 
 const server = new hapi.server({
     port: 4000,
@@ -11,6 +17,21 @@ const server = new hapi.server({
 
 
 const init = async () => {
+
+    // Swagger plugin
+    await server.register([
+		Inert,
+		Vision,
+		{
+			plugin: HapiSwagger,
+			options: {
+				info: {
+					title: 'Paintings API Documentation',
+					version: Pack.version
+				}
+			}
+		}
+	]);
 
     // // Notice it’s graphiql not graphql.
     // // Graphiql is the in-browser IDE for exploring GraphQL.
@@ -56,6 +77,10 @@ const init = async () => {
     {
         method: 'GET',
         path: '/api/v1/paintings',
+        config: {
+            description: 'Get all the paintings',
+            tags: ['api', 'v1', 'painting']
+        },
         handler: (req, reply) => {
             return Painting.find();
         }
