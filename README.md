@@ -1,1 +1,1 @@
-setting up a powerful API with Nodejs, GraphQL, MongoDB, Hapi, and Swagger
+setting up a powerful API with Nodejs, GraphQL, MongoDB, Hapi, and Swagger 
