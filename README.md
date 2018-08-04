@@ -14,3 +14,28 @@ const Painting = require('../models/Painting');
 resolve(parent, args) {
     return Painting.findById(args.id)
 }
+
+Swagger offers the most powerful and easiest to use tools to take full advantage of the OpenAPI Specification
+yarn add hapi-swagger inert vision
+
+add as plugin
+// Swagger plugin
+    await server.register([
+		Inert,
+		Vision,
+		{
+			plugin: HapiSwagger,
+			options: {
+				info: {
+					title: 'Paintings API Documentation',
+					version: Pack.version
+				}
+			}
+		}
+	]);
+add routing config
+config: {
+            description: 'Get all the paintings',
+            tags: ['api', 'v1', 'painting']
+        },
+
