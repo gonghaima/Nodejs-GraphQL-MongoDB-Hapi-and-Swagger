@@ -25,7 +25,6 @@ const init = async () => {
     });
 
     // //Register graphqlHapi which includes the schema
-
     await server.register({
         plugin: graphqlHapi,
         options: {
